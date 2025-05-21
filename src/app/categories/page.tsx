@@ -1,11 +1,9 @@
+import Categories from "@/features/categories/Categories";
+import { getCategories } from "@/requests/categories/getCategories";
 import { JSX } from "react";
-import { fetcher } from "@/requests/fetcher";
 
 export default async function Page(): Promise<JSX.Element> {
-  const data = await fetcher("/categories", {
-    method: "GET",
-  });
-  console.log({ data });
+  const categories = await getCategories();
 
-  return <div>TEST</div>;
+  return <Categories categories={categories} />;
 }
