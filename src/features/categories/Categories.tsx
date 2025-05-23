@@ -1,8 +1,7 @@
 import UiSectionContainer from "@/common/ui/ui-section-container/UiSectionContainer";
 import UiSectionTitle from "@/common/ui/ui-section-title/UiSectionTitle";
-import CategoryCard from "@/features/categories/components/CategoryCard";
+import CategoryList from "@/features/categories/components/CategoryList";
 import { ICategory } from "@/requests/categories/catetories.types";
-import { Box } from "@mui/material";
 import { JSX } from "react";
 
 interface ICategoriesProps {
@@ -15,21 +14,7 @@ export default function Categories({
   return (
     <UiSectionContainer>
       <UiSectionTitle>Choose categories</UiSectionTitle>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-          },
-          gap: 2,
-        }}
-      >
-        {categories.map((category) => (
-          <CategoryCard category={category} key={category.id} />
-        ))}
-      </Box>
+      <CategoryList categories={categories} />
     </UiSectionContainer>
   );
 }
