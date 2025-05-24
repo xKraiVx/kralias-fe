@@ -1,11 +1,8 @@
 export interface ICategory {
   id: string;
-  documentId: string;
   name: string;
   slug: string;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date;
+  hasWords: boolean;
 }
 
 export interface ICategoriesResponse {

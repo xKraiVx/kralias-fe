@@ -37,6 +37,7 @@ export default function CategoryList({
       {categories.map((category) => (
         <CategoryCard
           isSelected={selectedCategories.includes(category.slug)}
+          disabled={!category.hasWords}
           category={category}
           key={category.id}
           onClick={handleCategoryClick}

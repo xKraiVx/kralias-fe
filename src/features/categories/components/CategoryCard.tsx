@@ -4,15 +4,17 @@ import { Card, Typography } from "@mui/material";
 import { JSX } from "react";
 
 interface ICategoryCardProps {
-  isSelected?: boolean;
   category: ICategory;
+  isSelected?: boolean;
+  disabled?: boolean;
   onClick?: (categoryId: string) => void;
 }
 
 export default function CategoryCard({
   category,
-  onClick,
   isSelected = false,
+  disabled = false,
+  onClick,
 }: ICategoryCardProps): JSX.Element {
   const handleClick = (): void => {
     onClick?.(category.slug);
@@ -29,6 +31,8 @@ export default function CategoryCard({
         "&:hover, &:focus": { opacity: 0.5 },
         transition: "opacity 0.3s",
         border: "none",
+        pointerEvents: disabled ? "none" : "auto",
+        opacity: disabled ? 0.5 : 1,
       }}
     >
       {isSelected && (
@@ -42,7 +46,13 @@ export default function CategoryCard({
           }}
         />
       )}
-      <Typography variant="h5" component="h2">
+      <Typography
+        variant="h5"
+        component="h2"
+        sx={{
+          color: disabled ? "text.disabled" : "text.primary",
+        }}
+      >
         {category.name}
       </Typography>
     </Card>
