@@ -3,59 +3,36 @@
 import {
   createAliasStore,
   TAliasStore,
-} from "@/stores/alias-store/alias.store";
-import {
-  createContext,
-  useRef,
-  useContext,
-  PropsWithChildren,
-  useState,
-} from "react";
+} from "@/providers/alias-store-provider/alias-store/alias.store";
+import { createContext, useRef, useContext, PropsWithChildren } from "react";
 import { useStore } from "zustand";
 
 export type TAliasStoreReturn = ReturnType<typeof createAliasStore> | undefined;
 
-export type IAliasApi = {
-  store: ReturnType<typeof createAliasStore> | undefined;
-  isLoading: boolean;
-};
+export type TAliasApi = ReturnType<typeof createAliasStore> | undefined;
 
-export const AliasStoreContext = createContext<IAliasApi>({
-  store: undefined,
-  isLoading: true,
-});
+export const AliasStoreContext = createContext<TAliasApi>(undefined);
 
 export const AliasStoreProvider = ({ children }: PropsWithChildren) => {
   const storeRef = useRef<TAliasStoreReturn | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   if (storeRef.current === null) {
-    storeRef.current = createAliasStore({
-      setIsLoaded: () => setIsLoading(false),
-    });
+    storeRef.current = createAliasStore();
   }
 
   return (
-    <AliasStoreContext.Provider value={{ store: storeRef.current, isLoading }}>
+    <AliasStoreContext.Provider value={storeRef.current}>
       {children}
     </AliasStoreContext.Provider>
   );
 };
 
-const useAliasStore = <T,>(
-  selector: (store: TAliasStore) => T
-): T & { isLoading: boolean } => {
-  const { store, isLoading } = useContext(AliasStoreContext);
+export const useAliasStore = <T,>(selector: (store: TAliasStore) => T): T => {
+  const store = useContext(AliasStoreContext);
 
   if (!store) {
     throw new Error(`useCounterStore must be used within StoreProvider`);
   }
 
-  return { ...useStore(store, selector), isLoading };
-};
-
-export const useAlias = (): TAliasStore => {
-  const store = useAliasStore((store) => store);
-
-  return store;
+  return useStore(store, selector);
 };

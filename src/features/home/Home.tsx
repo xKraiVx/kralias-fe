@@ -1,3 +1,4 @@
+import { CATEGORIES_PATH } from "@/common/constants/paths.constant";
 import { Box, Button } from "@mui/material";
 import Link from "next/link";
 import { JSX } from "react";
@@ -14,7 +15,7 @@ export default function Home(): JSX.Element {
     >
       <Button
         LinkComponent={Link}
-        href="/categories"
+        href={CATEGORIES_PATH}
         variant="contained"
         color="primary"
         size="large"

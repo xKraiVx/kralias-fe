@@ -1,8 +1,9 @@
+import { JSX } from "react";
 import UiSectionContainer from "@/common/ui/ui-section-container/UiSectionContainer";
 import UiSectionTitle from "@/common/ui/ui-section-title/UiSectionTitle";
-import CategoryList from "@/features/categories/components/CategoryList";
 import { ICategory } from "@/requests/categories/catetories.types";
-import { JSX } from "react";
+import CategoriesActions from "@/features/categories/components/CategoriesActions";
+import CategoriesList from "@/features/categories/components/CategoriesList";
 
 interface ICategoriesProps {
   categories: ICategory[];
@@ -14,7 +15,8 @@ export default function Categories({
   return (
     <UiSectionContainer>
       <UiSectionTitle>Choose categories</UiSectionTitle>
-      <CategoryList categories={categories} />
+      <CategoriesList categories={categories} />
+      <CategoriesActions />
     </UiSectionContainer>
   );
 }

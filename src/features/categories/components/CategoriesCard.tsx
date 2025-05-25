@@ -10,7 +10,7 @@ interface ICategoryCardProps {
   onClick?: (categoryId: string) => void;
 }
 
-export default function CategoryCard({
+export default function CategoriesCard({
   category,
   isSelected = false,
   disabled = false,

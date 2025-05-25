@@ -1,0 +1,5 @@
+import { useAliasStore } from "@/providers/alias-store-provider/AliasStoreProvider";
+
+export const useChosenCategories = (): string[] => {
+  return useAliasStore((store) => store.chosenCategories);
+};

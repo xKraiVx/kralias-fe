@@ -4,7 +4,7 @@ export interface IChosenCategoriesState {
   chosenCategories: string[];
 }
 
-interface IChosenCategoriesActions {
+export interface IChosenCategoriesActions {
   toggleCategory: (categorySlug: string) => void;
   resetCategories: () => void;
 }

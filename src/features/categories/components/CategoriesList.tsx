@@ -1,20 +1,22 @@
 "use client";
 
-import Bouncing from "@/common/animations/Bouncing";
-import CategoryCard from "@/features/categories/components/CategoryCard";
-import { useAlias } from "@/providers/alias-store-provider/AliasStoreProvider";
+import { JSX } from "react";
+import Bouncing from "@/common/components/animations/Bouncing";
+import { useChosenCategories } from "@/providers/alias-store-provider/alias-store/slices/hooks/useChosenCategories";
+import { useChosenCategoriesActions } from "@/providers/alias-store-provider/alias-store/slices/hooks/useChosenCategoriesActions";
 import { ICategory } from "@/requests/categories/catetories.types";
 import { Box } from "@mui/material";
-import { JSX } from "react";
+import CategoriesCard from "@/features/categories/components/CategoriesCard";
 
 interface ICategoryListProps {
   categories: ICategory[];
 }
 
-export default function CategoryList({
+export default function CategoriesList({
   categories,
 }: ICategoryListProps): JSX.Element {
-  const { chosenCategories, actions } = useAlias();
+  const chosenCategories = useChosenCategories();
+  const { toggleCategory } = useChosenCategoriesActions();
 
   return (
     <Box
@@ -30,11 +32,11 @@ export default function CategoryList({
     >
       {categories.map((category, idx) => (
         <Bouncing key={category.id} delay={idx * 0.1}>
-          <CategoryCard
+          <CategoriesCard
             isSelected={chosenCategories.includes(category.slug)}
             disabled={!category.hasWords}
             category={category}
-            onClick={actions.toggleCategory}
+            onClick={toggleCategory}
           />
         </Bouncing>
       ))}
