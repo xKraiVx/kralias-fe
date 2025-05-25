@@ -24,6 +24,7 @@ export default function CategoryCard({
     <Card
       component="button"
       onClick={handleClick}
+      tabIndex={disabled ? -1 : 0}
       sx={{
         position: "relative",
         padding: 2,
@@ -33,6 +34,7 @@ export default function CategoryCard({
         border: "none",
         pointerEvents: disabled ? "none" : "auto",
         opacity: disabled ? 0.5 : 1,
+        width: "100%",
       }}
     >
       {isSelected && (

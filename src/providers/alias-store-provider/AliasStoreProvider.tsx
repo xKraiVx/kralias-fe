@@ -1,47 +1,63 @@
-// src/providers/counter-store-provider.tsx
 "use client";
 
 import {
-  createChosenCategoriesStore,
-  initChosenCategoriesStore,
-  TChosenCategoriesStore,
-} from "@/stores/chosenCategories.store";
-import { type ReactNode, createContext, useRef, useContext } from "react";
+  createAliasStore,
+  initAliasStore,
+  TAliasStore,
+} from "@/stores/alias-store/alias.store";
+import {
+  createContext,
+  useRef,
+  useContext,
+  PropsWithChildren,
+  useState,
+} from "react";
 import { useStore } from "zustand";
 
-export type IChosenCategoriesApi = ReturnType<
-  typeof createChosenCategoriesStore
->;
+export type TAliasStoreReturn = ReturnType<typeof createAliasStore> | undefined;
 
-export const AliasStoreContext = createContext<
-  IChosenCategoriesApi | undefined
->(undefined);
+export type IAliasApi = {
+  store: ReturnType<typeof createAliasStore> | undefined;
+  isLoading: boolean;
+};
 
-export interface StoreProviderProps {
-  children: ReactNode;
-}
+export const AliasStoreContext = createContext<IAliasApi>({
+  store: undefined,
+  isLoading: true,
+});
 
-export const AliasStoreProvider = ({ children }: StoreProviderProps) => {
-  const storeRef = useRef<IChosenCategoriesApi | null>(null);
+export const AliasStoreProvider = ({ children }: PropsWithChildren) => {
+  const storeRef = useRef<TAliasStoreReturn | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   if (storeRef.current === null) {
-    storeRef.current = createChosenCategoriesStore(initChosenCategoriesStore());
+    storeRef.current = createAliasStore({
+      initState: initAliasStore(),
+      setIsLoaded: () => setIsLoading(false),
+    });
   }
 
   return (
-    <AliasStoreContext.Provider value={storeRef.current}>
+    <AliasStoreContext.Provider value={{ store: storeRef.current, isLoading }}>
       {children}
     </AliasStoreContext.Provider>
   );
 };
 
-export const useAliasStore = <T,>(
-  selector: (store: TChosenCategoriesStore) => T
-): T => {
-  const aliasStoreContext = useContext(AliasStoreContext);
+const useAliasStore = <T,>(
+  selector: (store: TAliasStore) => T
+): T & { isLoading: boolean } => {
+  const { store, isLoading } = useContext(AliasStoreContext);
 
-  if (!aliasStoreContext) {
+  if (!store) {
     throw new Error(`useCounterStore must be used within StoreProvider`);
   }
 
-  return useStore(aliasStoreContext, selector);
+  return { ...useStore(store, selector), isLoading };
+};
+
+export const useAlias = (): TAliasStore => {
+  const store = useAliasStore((store) => store);
+
+  return store;
 };
