@@ -2,7 +2,6 @@
 
 import {
   createAliasStore,
-  initAliasStore,
   TAliasStore,
 } from "@/stores/alias-store/alias.store";
 import {
@@ -32,7 +31,6 @@ export const AliasStoreProvider = ({ children }: PropsWithChildren) => {
 
   if (storeRef.current === null) {
     storeRef.current = createAliasStore({
-      initState: initAliasStore(),
       setIsLoaded: () => setIsLoading(false),
     });
   }

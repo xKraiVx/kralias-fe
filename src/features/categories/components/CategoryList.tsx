@@ -14,7 +14,7 @@ interface ICategoryListProps {
 export default function CategoryList({
   categories,
 }: ICategoryListProps): JSX.Element {
-  const { chosenCategories, toggleCategory } = useAlias();
+  const { chosenCategories, actions } = useAlias();
 
   return (
     <Box
@@ -34,7 +34,7 @@ export default function CategoryList({
             isSelected={chosenCategories.includes(category.slug)}
             disabled={!category.hasWords}
             category={category}
-            onClick={toggleCategory}
+            onClick={actions.toggleCategory}
           />
         </Bouncing>
       ))}
