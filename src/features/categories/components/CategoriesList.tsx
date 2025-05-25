@@ -2,8 +2,8 @@
 
 import { JSX } from "react";
 import Bouncing from "@/common/components/animations/Bouncing";
-import { useChosenCategories } from "@/providers/alias-store-provider/alias-store/slices/hooks/useChosenCategories";
-import { useChosenCategoriesActions } from "@/providers/alias-store-provider/alias-store/slices/hooks/useChosenCategoriesActions";
+import { useChosenCategories } from "@/providers/alias-store-provider/alias-store/slices/chosen-categories-slice/hooks/useChosenCategories";
+import { useChosenCategoriesActions } from "@/providers/alias-store-provider/alias-store/slices/chosen-categories-slice/hooks/useChosenCategoriesActions";
 import { ICategory } from "@/requests/categories/catetories.types";
 import { Box } from "@mui/material";
 import CategoriesCard from "@/features/categories/components/CategoriesCard";

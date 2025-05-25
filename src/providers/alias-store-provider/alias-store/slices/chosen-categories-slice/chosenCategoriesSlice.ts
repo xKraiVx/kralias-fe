@@ -6,11 +6,11 @@ export interface IChosenCategoriesState {
 
 export interface IChosenCategoriesActions {
   toggleCategory: (categorySlug: string) => void;
-  resetCategories: () => void;
+  resetCategories: VoidFunction;
 }
 
 export interface IChosenCategoriesSlice extends IChosenCategoriesState {
-  actions: IChosenCategoriesActions;
+  chosenCategoriesActions: IChosenCategoriesActions;
 }
 
 const initState: IChosenCategoriesState = {
@@ -24,7 +24,7 @@ export const createChosenCategoriesSlice: StateCreator<
   IChosenCategoriesSlice
 > = (set) => ({
   ...initState,
-  actions: {
+  chosenCategoriesActions: {
     toggleCategory: (categorySlug) =>
       set((state) => {
         const isSelected = state.chosenCategories.includes(categorySlug);
