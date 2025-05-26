@@ -17,9 +17,11 @@ export interface ITeamsState {
 }
 
 export interface ITeamsActions {
-  addResult: (teamName: string, result: ITeamResult) => void;
-  updateResult: (teamName: string, result: ITeamResult) => void;
-  addTeam?: (teamName: string, order: number) => void;
+  addTeamResult: (teamName: string, result: ITeamResult) => void;
+  updateTeamResult: (teamName: string, result: ITeamResult) => void;
+  addTeam: (teamName: string, order: number) => void;
+  removeTeam: (teamName: string) => void;
+  updateTeam: (teamName: string, newTeamName: string) => void;
 }
 
 export interface ITeamsSlice extends ITeamsState {
@@ -52,11 +54,58 @@ export const createTeamsSlice: StateCreator<
           results: [],
         };
 
+        console.log("Adding new team:", newTeam);
+
         return {
           teams: [...state.teams, newTeam],
         };
       }),
-    addResult: (teamName, result) =>
+    removeTeam: (teamName) =>
+      set((state) => {
+        const isTeamExist = state.teams.some((team) => team.name === teamName);
+
+        if (!isTeamExist) {
+          throw new Error(`Team ${teamName} not found`);
+        }
+        const updatedTeams = state.teams.filter(
+          (team) => team.name !== teamName
+        );
+        console.log("Removing team:", teamName);
+        return {
+          teams: updatedTeams,
+        };
+      }),
+
+    updateTeam: (teamName, newTeamName) =>
+      set((state) => {
+        const isTeamExist = state.teams.some((team) => team.name === teamName);
+
+        if (!isTeamExist) {
+          throw new Error(`Team ${teamName} not found`);
+        }
+
+        const isNewTeamNameExist = state.teams.some(
+          (team) => team.name === newTeamName
+        );
+
+        if (isNewTeamNameExist) {
+          throw new Error(`Team ${newTeamName} already exists`);
+        }
+
+        const updatedTeams = state.teams.map((team) => {
+          if (team.name !== teamName) return team;
+
+          return {
+            ...team,
+            name: newTeamName,
+          };
+        });
+
+        return {
+          teams: updatedTeams,
+        };
+      }),
+    addTeamResult: (teamName, result) =>
       set((state) => {
         const isTeamExist = state.teams.some((team) => team.name === teamName);
 
@@ -77,7 +126,7 @@ export const createTeamsSlice: StateCreator<
           teams: updateTeams,
         };
       }),
-    updateResult: (teamName, result) =>
+    updateTeamResult: (teamName, result) =>
       set((state) => {
         const isTeamExist = state.teams.some((team) => team.name === teamName);
 

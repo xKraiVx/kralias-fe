@@ -20,6 +20,10 @@ export const createAliasStore = () => {
       }),
       {
         name: "alias-store",
+        partialize: (state) => ({
+          chosenCategories: state.chosenCategories,
+          teams: state.teams,
+        }),
       }
     )
   );

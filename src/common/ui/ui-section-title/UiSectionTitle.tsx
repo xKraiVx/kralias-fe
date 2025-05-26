@@ -11,6 +11,7 @@ export default function UiSectionTitle({
       variant="h2"
       sx={{
         mb: 4,
+        textAlign: "center",
         ...sx,
       }}
       {...props}
