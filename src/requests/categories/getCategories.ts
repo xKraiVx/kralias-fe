@@ -8,5 +8,6 @@ export const getCategories = async () => {
       method: "GET",
     },
   });
+
   return data;
 };

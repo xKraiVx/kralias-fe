@@ -3,7 +3,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface IFetcherArgs {
   endpoint: string;
   options?: RequestInit;
-  params?: Record<string, string>;
+  params?: Record<string, string | string[]>;
 }
 
 export const fetcher = async <TData>({
