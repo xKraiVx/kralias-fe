@@ -18,7 +18,6 @@ export interface ITeamsState {
 
 export interface ITeamsActions {
   addTeamResult: (teamName: string, result: ITeamResult) => void;
-  updateTeamResult: (teamName: string, result: ITeamResult) => void;
   addTeam: (teamName: string, order: number) => void;
   removeTeam: (teamName: string) => void;
   updateTeam: (teamName: string, newTeamName: string) => void;
@@ -119,31 +118,6 @@ export const createTeamsSlice: StateCreator<
           return {
             ...team,
             results: [...team.results, result],
-          };
-        });
-
-        return {
-          teams: updateTeams,
-        };
-      }),
-    updateTeamResult: (teamName, result) =>
-      set((state) => {
-        const isTeamExist = state.teams.some((team) => team.name === teamName);
-
-        if (!isTeamExist) {
-          throw new Error(`Team ${teamName} not found`);
-        }
-
-        const updateTeams = state.teams.map((team) => {
-          if (team.name !== teamName) return team;
-
-          const updatedResults = team.results.map((res) =>
-            res.round === result.round ? result : res
-          );
-
-          return {
-            ...team,
-            results: updatedResults,
           };
         });
 
