@@ -1,16 +1,10 @@
-import { ITeamResult } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/teamsSlice";
 import { StateCreator } from "zustand";
-
-export interface ITurnStats {
-  isPause: boolean;
-  timeLeft: number;
-  turnResults: ITeamResult[];
-}
 
 export interface IGame {
   round: number;
   currentTurn: number;
-  currentTurnStats: ITurnStats;
+  isPaused: boolean;
+  timeLeft: number;
   gameOver: boolean;
 }
 
@@ -21,7 +15,6 @@ export interface IGameState {
 export interface IGameActions {
   startNewRound: VoidFunction;
   startNewTurn: VoidFunction;
-  addWordToTurnResults: (word: string, isAnswered: boolean) => void;
 }
 
 export interface IGameSlice extends IGameState {
@@ -32,11 +25,8 @@ const initState: IGameState = {
   gameStats: {
     round: 1,
     currentTurn: 1,
-    currentTurnStats: {
-      isPause: false,
-      timeLeft: 0,
-      turnResults: [],
-    },
+    isPaused: false,
+    timeLeft: 0,
     gameOver: false,
   },
 };
@@ -58,33 +48,7 @@ export const createGameSlice: StateCreator<IGameSlice, [], [], IGameSlice> = (
         gameStats: {
           ...state.gameStats,
           currentTurn: state.gameStats.currentTurn + 1,
-          currentTurnStats: {
-            isPause: false,
-            timeLeft: 0,
-            turnResults: [],
-          },
         },
       })),
-    addWordToTurnResults: (word, isAnswered) =>
-      set((state) => {
-        const newResult: ITeamResult = {
-          word,
-          round: state.gameStats.round,
-          isAnswered,
-        };
-
-        return {
-          gameStats: {
-            ...state.gameStats,
-            currentTurnStats: {
-              ...state.gameStats.currentTurnStats,
-              turnResults: [
-                ...state.gameStats.currentTurnStats.turnResults,
-                newResult,
-              ],
-            },
-          },
-        };
-      }),
   },
 });
