@@ -1,17 +1,17 @@
+import { getScore } from "@/features/lobby/utils/getScore";
 import { ITeam } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/teamsSlice";
 import { Box, Typography } from "@mui/material";
-import { JSX } from "react";
+import { JSX, useMemo } from "react";
 
 interface ILobbyTeamProps {
   team: ITeam;
 }
 
 export default function LobbyTeam({ team }: ILobbyTeamProps): JSX.Element {
-  const { name } = team;
-
-  console.log({ order: team.order });
+  const { name, results } = team;
 
   const isActive = team.order === 0;
+  const score = useMemo(() => getScore(results), [results]);
 
   return (
     <Box
@@ -48,7 +48,7 @@ export default function LobbyTeam({ team }: ILobbyTeamProps): JSX.Element {
           color: isActive ? "primary.contrastText" : "text.primary",
         }}
       >
-        0
+        {score}
       </Typography>
     </Box>
   );
