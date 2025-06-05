@@ -4,3 +4,9 @@ import { useAliasStore } from "@/providers/alias-store-provider/AliasStoreProvid
 export const useTeams = (): ITeam[] => {
   return useAliasStore((store) => store.teams);
 };
+
+export const useGetTeamByOrder = (order: number): ITeam | undefined => {
+  return useAliasStore((store) =>
+    store.teams.find((team) => team.order === order)
+  );
+};

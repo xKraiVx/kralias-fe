@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 
-export interface IGame {
+export interface IGameStats {
   round: number;
   currentTurn: number;
   isPaused: boolean;
@@ -8,20 +8,20 @@ export interface IGame {
   gameOver: boolean;
 }
 
-export interface IGameState {
-  gameStats: IGame;
+export interface IGameStatsState {
+  gameStats: IGameStats;
 }
 
-export interface IGameActions {
+export interface IGameStatsActions {
   startNewRound: VoidFunction;
   startNewTurn: VoidFunction;
 }
 
-export interface IGameSlice extends IGameState {
-  gameActions: IGameActions;
+export interface IGameStatsSlice extends IGameStatsState {
+  gameStatsActions: IGameStatsActions;
 }
 
-const initState: IGameState = {
+const initState: IGameStatsState = {
   gameStats: {
     round: 1,
     currentTurn: 1,
@@ -31,11 +31,14 @@ const initState: IGameState = {
   },
 };
 
-export const createGameSlice: StateCreator<IGameSlice, [], [], IGameSlice> = (
-  set
-) => ({
+export const createGameStatsSlice: StateCreator<
+  IGameStatsSlice,
+  [],
+  [],
+  IGameStatsSlice
+> = (set) => ({
   ...initState,
-  gameActions: {
+  gameStatsActions: {
     startNewRound: () =>
       set((state) => ({
         gameStats: {

@@ -3,6 +3,10 @@ import {
   IChosenCategoriesSlice,
 } from "@/providers/alias-store-provider/alias-store/slices/chosen-categories-slice/chosenCategoriesSlice";
 import {
+  createGameStatsSlice,
+  IGameStatsSlice,
+} from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/gameStatsSlice";
+import {
   createRulesSlice,
   IRulesSlice,
 } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/rulesSlice";
@@ -13,7 +17,10 @@ import {
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type TAliasStore = IChosenCategoriesSlice & ITeamsSlice & IRulesSlice;
+export type TAliasStore = IChosenCategoriesSlice &
+  ITeamsSlice &
+  IRulesSlice &
+  IGameStatsSlice;
 
 export const createAliasStore = () => {
   return create<TAliasStore>()(
@@ -22,6 +29,7 @@ export const createAliasStore = () => {
         ...createChosenCategoriesSlice(...a),
         ...createTeamsSlice(...a),
         ...createRulesSlice(...a),
+        ...createGameStatsSlice(...a),
       }),
       {
         name: "alias-store",
@@ -29,6 +37,7 @@ export const createAliasStore = () => {
           chosenCategories: state.chosenCategories,
           teams: state.teams,
           rules: state.rules,
+          gameStats: state.gameStats,
         }),
       }
     )

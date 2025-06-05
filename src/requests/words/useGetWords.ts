@@ -23,6 +23,7 @@ export const useGetWords = (): IUseGetWords => {
 
       return res;
     },
+    refetchOnWindowFocus: false,
   });
 
   return { words: query.data, query };
