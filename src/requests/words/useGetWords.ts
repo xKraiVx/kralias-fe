@@ -6,6 +6,7 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 interface IUseGetWords {
   words: IWord[] | undefined;
+  fetchWords: VoidFunction;
   query: UseQueryResult<IWord[], Error>;
 }
 
@@ -23,8 +24,9 @@ export const useGetWords = (): IUseGetWords => {
 
       return res;
     },
+    enabled: false,
     refetchOnWindowFocus: false,
   });
 
-  return { words: query.data, query };
+  return { words: query.data, fetchWords: query.refetch, query };
 };

@@ -1,4 +1,4 @@
-import { SxProps, Typography } from "@mui/material";
+import { Skeleton, SxProps, Typography } from "@mui/material";
 import { JSX } from "react";
 
 export interface IGameTeamInfoProps {
@@ -11,21 +11,11 @@ export default function GameTeamInfo({
   sx,
 }: IGameTeamInfoProps): JSX.Element | null {
   if (!teamName) {
-    return null;
+    return <Skeleton variant="text" sx={sx} width={200} height={75} />;
   }
 
   return (
-    <Typography
-      variant="h2"
-      component="h3"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        ...sx,
-      }}
-      color="text.secondary"
-    >
+    <Typography variant="h2" component="h3" sx={sx} color="text.secondary">
       {teamName}
     </Typography>
   );

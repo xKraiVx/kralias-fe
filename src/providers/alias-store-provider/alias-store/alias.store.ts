@@ -26,6 +26,7 @@ export const createAliasStore = () => {
   return create<TAliasStore>()(
     persist(
       (...a) => ({
+        isLoading: true,
         ...createChosenCategoriesSlice(...a),
         ...createTeamsSlice(...a),
         ...createRulesSlice(...a),
