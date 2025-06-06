@@ -20,7 +20,9 @@ import { persist } from "zustand/middleware";
 export type TAliasStore = IChosenCategoriesSlice &
   ITeamsSlice &
   IRulesSlice &
-  IGameStatsSlice;
+  IGameStatsSlice & {
+    isLoading: boolean;
+  };
 
 export const createAliasStore = () => {
   return create<TAliasStore>()(
@@ -40,6 +42,11 @@ export const createAliasStore = () => {
           rules: state.rules,
           gameStats: state.gameStats,
         }),
+        onRehydrateStorage: (state) => {
+          if (state) {
+            state.isLoading = false;
+          }
+        },
       }
     )
   );

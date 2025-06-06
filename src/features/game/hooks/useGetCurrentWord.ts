@@ -10,13 +10,11 @@ export const useGetCurrentWord = (): IWord | undefined => {
   const { fetchWords, words } = useGetWords();
 
   useEffect(() => {
-    if (!currentTurnWords) {
+    if (!!currentTurnWords && currentTurnWords.length) {
       return;
     }
 
-    if (!currentTurnWords?.length) {
-      fetchWords();
-    }
+    fetchWords();
   }, [currentTurnWords, fetchWords]);
 
   useEffect(() => {
