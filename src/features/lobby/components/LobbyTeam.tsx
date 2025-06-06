@@ -1,4 +1,5 @@
 import { getScore } from "@/features/lobby/utils/getScore";
+import { useGameStats } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStats";
 import { ITeam } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/teamsSlice";
 import { Box, Typography } from "@mui/material";
 import { JSX, useMemo } from "react";
@@ -9,8 +10,9 @@ interface ILobbyTeamProps {
 
 export default function LobbyTeam({ team }: ILobbyTeamProps): JSX.Element {
   const { name, results } = team;
+  const { currentTurn } = useGameStats();
 
-  const isActive = team.order === 0;
+  const isActive = team.order === currentTurn;
   const score = useMemo(() => getScore(results), [results]);
 
   return (

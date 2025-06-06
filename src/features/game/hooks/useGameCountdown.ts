@@ -16,10 +16,6 @@ export const useGameCountdown = (): number => {
   });
 
   useEffect(() => {
-    if (timeLeft === null) {
-      return;
-    }
-
     setRemainTime(duration - timeLeft);
 
     const interval = setInterval(() => {

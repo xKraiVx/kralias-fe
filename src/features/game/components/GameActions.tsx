@@ -1,18 +1,22 @@
 import UiFixedActions from "@/common/ui/ui-fixed-actions/UiFixedActions";
-import { useGameStatsActions } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStatsActions";
+import { useAddWordToTeam } from "@/features/game/hooks/useAddWordToTeam";
 import { Button } from "@mui/material";
 import { JSX } from "react";
 
 export default function GameActions(): JSX.Element {
-  const { setTimeLeft } = useGameStatsActions();
+  const addWordToTeam = useAddWordToTeam();
 
   const handleDone = () => {
-    setTimeLeft(0);
+    addWordToTeam(true);
+  };
+
+  const handleSkip = () => {
+    addWordToTeam(false);
   };
 
   return (
     <UiFixedActions>
-      <Button variant="contained" color="error">
+      <Button variant="contained" color="error" onClick={handleSkip}>
         Skip
       </Button>
       <Button variant="contained" onClick={handleDone}>

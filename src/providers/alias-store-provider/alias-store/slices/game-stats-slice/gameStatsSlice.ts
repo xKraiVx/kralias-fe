@@ -6,7 +6,7 @@ export interface IGameStats {
   currentTurn: number;
   currentTurnWords: IWord[] | null;
   isPaused: boolean;
-  timeLeft: number | null;
+  timeLeft: number;
   gameOver: boolean;
 }
 
@@ -18,7 +18,8 @@ export interface IGameStatsActions {
   startNewRound: VoidFunction;
   startNewTurn: VoidFunction;
   setCurrentTurnWords: (words: IWord[]) => void;
-  setTimeLeft: (timeLeft: number | null) => void;
+  setTimeLeft: (timeLeft: number) => void;
+  nextWord: VoidFunction;
 }
 
 export interface IGameStatsSlice extends IGameStatsState {
@@ -31,7 +32,7 @@ const initState: IGameStatsState = {
     currentTurn: 1,
     currentTurnWords: null,
     isPaused: false,
-    timeLeft: null,
+    timeLeft: 0,
     gameOver: false,
   },
 };
@@ -58,7 +59,7 @@ export const createGameStatsSlice: StateCreator<
           currentTurn: state.gameStats.currentTurn + 1,
         },
       })),
-    setTimeLeft: (timeLeft: number | null) =>
+    setTimeLeft: (timeLeft: number) =>
       set((state) => ({
         gameStats: {
           ...state.gameStats,
@@ -72,5 +73,21 @@ export const createGameStatsSlice: StateCreator<
           currentTurnWords: words,
         },
       })),
+    nextWord: () =>
+      set((state) => {
+        const currentWords = state.gameStats.currentTurnWords;
+        if (!currentWords || currentWords.length === 0) {
+          return state;
+        }
+
+        const [...restWords] = currentWords.slice(1);
+
+        return {
+          gameStats: {
+            ...state.gameStats,
+            currentTurnWords: restWords,
+          },
+        };
+      }),
   },
 });

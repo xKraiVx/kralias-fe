@@ -16,7 +16,7 @@ export default function TeamsList(): JSX.Element {
   const handleAddTeam = () => {
     const teamName = getRandomName(teams.map((team) => team.name));
 
-    addTeam(teamName, teams.length);
+    addTeam(teamName, teams.length + 1);
   };
 
   const handleUpdateTeam = (teamName: string) => {
