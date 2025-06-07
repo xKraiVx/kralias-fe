@@ -7,13 +7,19 @@ import { useEffect, useState } from "react";
 export const useGameCountdown = (): number => {
   const { duration } = useRules();
   const { timeLeft } = useGameStats();
-  const { setTimeLeft } = useGameStatsActions();
+  const { setTimeLeft, finishTurn } = useGameStatsActions();
 
   const [remainTime, setRemainTime] = useState<number>(duration);
 
   useNavigationOrUnload(() => {
     setTimeLeft(duration - remainTime);
   });
+
+  useEffect(() => {
+    if (duration - remainTime === 0) {
+      finishTurn();
+    }
+  }, [remainTime, duration, finishTurn]);
 
   useEffect(() => {
     setRemainTime(duration - timeLeft);

@@ -8,6 +8,7 @@ export interface IGameStats {
   isPaused: boolean;
   timeLeft: number;
   gameOver: boolean;
+  isTurnFinished: boolean;
 }
 
 export interface IGameStatsState {
@@ -19,6 +20,7 @@ export interface IGameStatsActions {
   startNewTurn: VoidFunction;
   setCurrentTurnWords: (words: IWord[]) => void;
   setTimeLeft: (timeLeft: number) => void;
+  finishTurn: VoidFunction;
   nextWord: VoidFunction;
 }
 
@@ -34,6 +36,7 @@ const initState: IGameStatsState = {
     isPaused: false,
     timeLeft: 0,
     gameOver: false,
+    isTurnFinished: false,
   },
 };
 
@@ -71,6 +74,13 @@ export const createGameStatsSlice: StateCreator<
         gameStats: {
           ...state.gameStats,
           currentTurnWords: words,
+        },
+      })),
+    finishTurn: () =>
+      set((state) => ({
+        gameStats: {
+          ...state.gameStats,
+          isTurnFinished: true,
         },
       })),
     nextWord: () =>
