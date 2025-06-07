@@ -1,7 +1,7 @@
 import { useGetCurrentWord } from "@/features/game/hooks/useGetCurrentWord";
 import { useGameStats } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStats";
 import { useGameStatsActions } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStatsActions";
-import { useGetTeamByOrder } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeams";
+import { useGetTeamByOrder } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeams.hooks";
 import { useTeamsActions } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeamsActions";
 
 type TUseAddWordToTeamResult = (isAnswered: boolean) => void;

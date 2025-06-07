@@ -4,3 +4,7 @@ import { useAliasStore } from "@/providers/alias-store-provider/AliasStoreProvid
 export const useRules = (): IRules => {
   return useAliasStore((store) => store.rules);
 };
+
+export const useIsRulesStepFinished = (): boolean => {
+  return useRules().isFinished;
+};

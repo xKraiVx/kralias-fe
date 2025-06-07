@@ -1,10 +1,10 @@
 "use client";
 
 import Bouncing from "@/common/components/animations/Bouncing";
-import UiAddButton from "@/common/ui/ui-add-button.tsx/UiAddButton";
+import UiAddButton from "@/common/ui/ui-add-button/UiAddButton";
 import Team from "@/features/teams/components/Team";
 import { getRandomName } from "@/features/teams/utils/getRandomName";
-import { useTeams } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeams";
+import { useTeams } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeams.hooks";
 import { useTeamsActions } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeamsActions";
 import { Stack } from "@mui/material";
 import { JSX } from "react";

@@ -5,6 +5,7 @@ import {
 import { StateCreator } from "zustand";
 
 export interface IRules {
+  isFinished: boolean;
   duration: number;
   wordsToWin: number;
 }
@@ -16,6 +17,7 @@ export interface IRulesState {
 export interface IRulesActions {
   updateDuration: (duration: number) => void;
   updateWordsToWin: (wordsToWin: number) => void;
+  setIsFinished: (isFinished: boolean) => void;
 }
 
 export interface IRulesSlice extends IRulesState {
@@ -24,6 +26,7 @@ export interface IRulesSlice extends IRulesState {
 
 const initState: IRulesState = {
   rules: {
+    isFinished: false,
     duration: DEFAULT_DURATION,
     wordsToWin: DEFAULT_WORDS_TO_WIN,
   },
@@ -49,6 +52,13 @@ export const createRulesSlice: StateCreator<
         rules: {
           ...state.rules,
           wordsToWin,
+        },
+      })),
+    setIsFinished: (isFinished) =>
+      set((state) => ({
+        rules: {
+          ...state.rules,
+          isFinished,
         },
       })),
   },

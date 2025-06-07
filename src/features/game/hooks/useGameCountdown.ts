@@ -1,7 +1,7 @@
 import { useNavigationOrUnload } from "@/common/hooks/useNavigationOrUnload";
 import { useGameStats } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStats";
 import { useGameStatsActions } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStatsActions";
-import { useRules } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRules";
+import { useRules } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRules.hooks";
 import { useEffect, useState } from "react";
 
 export const useGameCountdown = (): number => {

@@ -6,7 +6,9 @@ export const useTeams = (): ITeam[] => {
 };
 
 export const useGetTeamByOrder = (order: number): ITeam | undefined => {
-  return useAliasStore((store) =>
-    store.teams.find((team) => team.order === order)
-  );
+  return useTeams().find((team) => team.order === order);
+};
+
+export const useIsTeamsStepFinished = (): boolean => {
+  return useTeams().length >= 2;
 };

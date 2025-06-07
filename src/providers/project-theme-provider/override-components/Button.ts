@@ -1,14 +1,17 @@
+import { GREY } from "@/providers/project-theme-provider/constants/palette";
+
 export const Button = {
   MuiButton: {
     styleOverrides: {
       root: {
-        padding: "8px 16px",
-        boxShadow: "none",
-        borderRadius: 0,
         "&.Mui-focusVisible": {
           boxShadow: "none",
         },
         "&:hover": { boxShadow: "none" },
+        "&.Mui-disabled": {
+          backgroundColor: GREY[800],
+          color: GREY[400],
+        },
       },
     },
   },

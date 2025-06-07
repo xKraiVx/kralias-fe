@@ -1,7 +1,7 @@
-import { CATEGORIES_PATH } from "@/common/constants/paths.constant";
-import { Box, Button } from "@mui/material";
-import Link from "next/link";
 import { JSX } from "react";
+
+import HomeStartButton from "@/features/home/components/home-start-button/HomeStartButton";
+import { Box } from "@mui/material";
 
 export default function Home(): JSX.Element {
   return (
@@ -13,15 +13,7 @@ export default function Home(): JSX.Element {
         height: "100vh",
       }}
     >
-      <Button
-        LinkComponent={Link}
-        href={CATEGORIES_PATH}
-        variant="contained"
-        color="primary"
-        size="large"
-      >
-        Start
-      </Button>
+      <HomeStartButton />
     </Box>
   );
 }

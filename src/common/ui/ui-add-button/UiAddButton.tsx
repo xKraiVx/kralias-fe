@@ -1,20 +1,15 @@
-import { Add } from "@mui/icons-material";
-import { Button, SxProps } from "@mui/material";
 import { JSX } from "react";
 
-interface IUiAddButtonProps {
-  onClick?: () => void;
-  sx?: SxProps;
-}
+import { Add } from "@mui/icons-material";
+import { Button, ButtonProps } from "@mui/material";
 
 export default function UiAddButton({
-  onClick,
   sx,
-}: IUiAddButtonProps): JSX.Element {
+  ...props
+}: ButtonProps): JSX.Element {
   return (
     <Button
       component="button"
-      onClick={onClick}
       variant="outlined"
       sx={{
         display: "flex",
@@ -31,6 +26,7 @@ export default function UiAddButton({
         },
         ...sx,
       }}
+      {...props}
     >
       <Add
         sx={{

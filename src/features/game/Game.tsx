@@ -8,7 +8,7 @@ import GameActions from "@/features/game/components/GameActions";
 import GameCountdown from "@/features/game/components/GameCountdown";
 import GameTeamInfo from "@/features/game/components/GameTeamInfo";
 import { useGameStats } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStats";
-import { useGetTeamByOrder } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeams";
+import { useGetTeamByOrder } from "@/providers/alias-store-provider/alias-store/slices/teams-slice/hooks/useTeams.hooks";
 import GameCurrentWord from "@/features/game/components/GameCurrentWord";
 import { Stack } from "@mui/material";
 

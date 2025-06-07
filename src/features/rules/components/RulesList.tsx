@@ -12,7 +12,7 @@ import {
   MIN_WORDS,
   STEP,
 } from "@/features/rules/constants/rules.constants";
-import { useRules } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRules";
+import { useRules } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRules.hooks";
 import { useRulesActions } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRulesActions";
 import { Stack } from "@mui/material";
 import { JSX } from "react";
