@@ -4,25 +4,25 @@ import { useGameStatsActions } from "@/providers/alias-store-provider/alias-stor
 import { useRules } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRules.hooks";
 import { useEffect, useState } from "react";
 
-export const useGameCountdown = (): number => {
+export const useGameCountdown = (): number | null => {
   const { duration } = useRules();
-  const { timeLeft } = useGameStats();
-  const { setTimeLeft, finishTurn } = useGameStatsActions();
+  const { timeRemain } = useGameStats();
+  const { setTimeRemain } = useGameStatsActions();
 
-  const [remainTime, setRemainTime] = useState<number>(duration);
+  const [remainTime, setRemainTime] = useState<number | null>(null);
 
   useNavigationOrUnload(() => {
-    setTimeLeft(duration - remainTime);
+    setTimeRemain(remainTime || duration);
   });
 
   useEffect(() => {
-    if (duration - remainTime === 0) {
-      finishTurn();
-    }
-  }, [remainTime, duration, finishTurn]);
+    const initialTimeLeft = timeRemain === null ? timeRemain : duration;
 
-  useEffect(() => {
-    setRemainTime(duration - timeLeft);
+    setRemainTime(initialTimeLeft);
+
+    if (!initialTimeLeft) {
+      return;
+    }
 
     const interval = setInterval(() => {
       setRemainTime((prev) => {
@@ -32,12 +32,13 @@ export const useGameCountdown = (): number => {
         }
 
         const newTimeLeft = prev ? prev - 1 : 0;
+
         return newTimeLeft;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [duration, timeLeft]);
+  }, [duration, timeRemain]);
 
   return remainTime;
 };

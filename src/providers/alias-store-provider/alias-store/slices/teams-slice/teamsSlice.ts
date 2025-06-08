@@ -54,8 +54,6 @@ export const createTeamsSlice: StateCreator<
           results: [],
         };
 
-        console.log("Adding new team:", newTeam);
-
         return {
           teams: [...state.teams, newTeam],
         };
@@ -70,7 +68,6 @@ export const createTeamsSlice: StateCreator<
         const updatedTeams = state.teams.filter(
           (team) => team.name !== teamName
         );
-        console.log("Removing team:", teamName);
         return {
           teams: updatedTeams,
         };
