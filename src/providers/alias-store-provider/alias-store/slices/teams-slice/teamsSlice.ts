@@ -18,7 +18,7 @@ export interface ITeamsState {
 
 export interface ITeamsActions {
   addTeamResult: (teamName: string, result: ITeamResult) => void;
-  updateTeamResult: (teamName: string, result: ITeamResult) => void;
+  toggleTeamResult: (teamName: string, word: string) => void;
   addTeam: (teamName: string, order: number) => void;
   removeTeam: (teamName: string) => void;
   updateTeam: (teamName: string, newTeamName: string) => void;
@@ -126,7 +126,7 @@ export const createTeamsSlice: StateCreator<
           teams: updateTeams,
         };
       }),
-    updateTeamResult: (teamName, result) =>
+    toggleTeamResult: (teamName, word) =>
       set((state) => {
         const isTeamExist = state.teams.some((team) => team.name === teamName);
 
@@ -134,12 +134,16 @@ export const createTeamsSlice: StateCreator<
           throw new Error(`Team ${teamName} not found`);
         }
 
-        const updateTeams = state.teams.map((team) => {
+        const updatedTeams = state.teams.map((team) => {
           if (team.name !== teamName) return team;
 
-          const updatedResults = team.results.map((res) =>
-            res.round === result.round ? result : res
-          );
+          const updatedResults = team.results.map((result) => {
+            if (result.word !== word) return result;
+            return {
+              ...result,
+              isAnswered: !result.isAnswered,
+            };
+          });
 
           return {
             ...team,
@@ -148,7 +152,7 @@ export const createTeamsSlice: StateCreator<
         });
 
         return {
-          teams: updateTeams,
+          teams: updatedTeams,
         };
       }),
   },

@@ -11,10 +11,5 @@ export const useGetTurnResults = (): ITeamResult[] => {
     () => currentTeam?.results.filter((word) => word.round === round) || [],
     [currentTeam?.results, round]
   );
-
-  if (!currentTeam) {
-    throw new Error("Current team not found");
-  }
-
   return results;
 };
