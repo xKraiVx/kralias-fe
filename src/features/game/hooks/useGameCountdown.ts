@@ -1,44 +1,46 @@
+"use ";
+
 import { useNavigationOrUnload } from "@/common/hooks/useNavigationOrUnload";
+import { useGetIsStorageHydrated } from "@/providers/alias-store-provider/alias-store/hooks/useGetIsStorageHydrated";
 import { useGameStats } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStats";
 import { useGameStatsActions } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/hooks/useGameStatsActions";
 import { useRules } from "@/providers/alias-store-provider/alias-store/slices/rules-slice/hooks/useRules.hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const useGameCountdown = (): number | null => {
   const { duration } = useRules();
   const { timeRemain } = useGameStats();
   const { setTimeRemain } = useGameStatsActions();
-
-  const [remainTime, setRemainTime] = useState<number | null>(null);
+  const isHydrated = useGetIsStorageHydrated();
 
   useNavigationOrUnload(() => {
-    setTimeRemain(remainTime || duration);
+    setTimeRemain(timeRemain !== null ? timeRemain : duration);
   });
 
   useEffect(() => {
-    const initialTimeLeft = timeRemain === null ? timeRemain : duration;
+    if (!isHydrated) {
+      return;
+    }
 
-    setRemainTime(initialTimeLeft);
+    const initialTimeLeft = timeRemain === null ? duration : timeRemain;
 
-    if (!initialTimeLeft) {
+    setTimeRemain(initialTimeLeft);
+
+    if (timeRemain === null) {
       return;
     }
 
     const interval = setInterval(() => {
-      setRemainTime((prev) => {
-        if (prev && prev <= 0) {
-          clearInterval(interval);
-          return 0;
-        }
-
-        const newTimeLeft = prev ? prev - 1 : 0;
-
-        return newTimeLeft;
-      });
+      setTimeRemain(timeRemain - 1);
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [duration, timeRemain]);
+    if (timeRemain <= 0) {
+      clearInterval(interval);
+      return;
+    }
 
-  return remainTime;
+    return () => clearInterval(interval);
+  }, [duration, isHydrated, setTimeRemain, timeRemain]);
+
+  return timeRemain;
 };

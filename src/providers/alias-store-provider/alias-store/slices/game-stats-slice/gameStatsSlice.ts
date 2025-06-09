@@ -32,7 +32,7 @@ const initState: IGameStatsState = {
     currentTurn: 1,
     currentTurnWords: null,
     isPaused: false,
-    timeRemain: 0,
+    timeRemain: null,
     gameOver: false,
   },
 };
@@ -50,6 +50,7 @@ export const createGameStatsSlice: StateCreator<
         gameStats: {
           ...initState.gameStats,
           round: state.gameStats.round + 1,
+          timeRemain: null,
         },
       })),
     startNewTurn: () =>
@@ -58,6 +59,7 @@ export const createGameStatsSlice: StateCreator<
           ...initState.gameStats,
           currentTurn: state.gameStats.currentTurn + 1,
           round: state.gameStats.round,
+          timeRemain: null,
         },
       })),
     setTimeRemain: (timeRemain: number) =>

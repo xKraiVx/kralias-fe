@@ -3,6 +3,10 @@ import {
   IChosenCategoriesSlice,
 } from "@/providers/alias-store-provider/alias-store/slices/chosen-categories-slice/chosenCategoriesSlice";
 import {
+  coreSlice,
+  ICoreSlice,
+} from "@/providers/alias-store-provider/alias-store/slices/core-slice/coreSlice";
+import {
   createGameStatsSlice,
   IGameStatsSlice,
 } from "@/providers/alias-store-provider/alias-store/slices/game-stats-slice/gameStatsSlice";
@@ -20,19 +24,18 @@ import { persist } from "zustand/middleware";
 export type TAliasStore = IChosenCategoriesSlice &
   ITeamsSlice &
   IRulesSlice &
-  IGameStatsSlice & {
-    isLoading: boolean;
-  };
+  IGameStatsSlice &
+  ICoreSlice;
 
 export const createAliasStore = () => {
   return create<TAliasStore>()(
     persist(
       (...a) => ({
-        isLoading: true,
         ...createChosenCategoriesSlice(...a),
         ...createTeamsSlice(...a),
         ...createRulesSlice(...a),
         ...createGameStatsSlice(...a),
+        ...coreSlice(...a),
       }),
       {
         name: "alias-store",
@@ -41,11 +44,10 @@ export const createAliasStore = () => {
           teams: state.teams,
           rules: state.rules,
           gameStats: state.gameStats,
+          _hasHydrated: state._hasHydrated,
         }),
         onRehydrateStorage: (state) => {
-          if (state) {
-            state.isLoading = false;
-          }
+          return () => state.setHasHydrated(true);
         },
       }
     )

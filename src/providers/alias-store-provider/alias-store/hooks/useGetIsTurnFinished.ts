@@ -3,5 +3,7 @@ import { useGameStats } from "@/providers/alias-store-provider/alias-store/slice
 export const useGetIsTurnFinished = (): boolean => {
   const { timeRemain } = useGameStats();
 
+  console.log({ timeRemain });
+
   return timeRemain === 0;
 };

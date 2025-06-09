@@ -15,6 +15,8 @@ export default function GameActions(): JSX.Element {
 
   const handleClick = (isAnswered: boolean) => {
     addWordToTeam(isAnswered);
+    console.log({ isAnswered, isTurnFinished });
+
     if (isTurnFinished) {
       push(TURN_RESULT_PATH);
     }

@@ -12,7 +12,7 @@ export default function GameCountdown({
   const remainTime = useGameCountdown();
 
   if (remainTime === null) {
-    return <Skeleton variant="text" width={100} height={50} sx={sx} />;
+    return <Skeleton variant="text" width={100} height={115} sx={sx} />;
   }
 
   return (
